@@ -2,16 +2,16 @@
 
 Gem::Specification.new do |s|
   s.name = %q{grackle}
-  s.version = "0.1.2"
+  s.version = "0.1.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Hayes Davis"]
-  s.date = %q{2009-04-12}
+  s.authors = ["Hayes Davis", "Jon Canady"]
+  s.date = %q{2009-07-22}
   s.description = %q{Grackle is a lightweight library for the Twitter REST and Search API.}
-  s.email = %q{hayes@appozite.com}
+  s.email = %q{jon@joncanady.com}
   s.files = ["History.txt", "README.rdoc", "grackle.gemspec", "lib/grackle.rb", "lib/grackle/client.rb", "lib/grackle/handlers.rb", "lib/grackle/transport.rb", "lib/grackle/utils.rb", "test/test_grackle.rb", "test/test_helper.rb", "test/test_client.rb", "test/test_handlers.rb"]
   s.has_rdoc = true
-  s.homepage = %q{http://github.com/hayesdavis/grackle}
+  s.homepage = %q{http://github.com/joncanady/grackle}
   s.rdoc_options = ["--inline-source", "--charset=UTF-8","--main=README.rdoc"]
   s.extra_rdoc_files = ['README.rdoc']
   s.require_paths = ["lib"]
