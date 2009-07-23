@@ -125,6 +125,14 @@ module Grackle
     end
                
     def method_missing(name,*args)
+      
+      # if we only have a single String arg,
+      # assume it's a query string (as in next_page on Search)
+      # and parse it out
+      if args[0].is_a?(String) && args.size == 1
+        *args = parse_query(args[0][1..-1])
+      end
+      
       #If method is a format name, execute using that format
       if format_invocation?(name)
         return call_with_format(name,*args)
@@ -241,6 +249,21 @@ module Grackle
       
       def format_invocation?(name)
         self.request.path? && VALID_FORMATS.include?(name)
+      end
+      
+      def parse_query(query)
+        params = Hash.new([].freeze)
+
+        query.split(/[&;]/n).each do |pairs|
+          key, value = pairs.split('=',2).collect{|v| CGI::unescape(v) }
+          if params.has_key?(key)
+            params[key].push(value)
+          else
+            params[key] = [value]
+          end
+        end
+
+        params
       end
   end
 end
