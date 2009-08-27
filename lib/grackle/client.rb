@@ -7,13 +7,14 @@ module Grackle
 
   #Raised by methods which call the API if a non-200 response status is received 
   class TwitterError < StandardError
-    attr_accessor :method, :request_uri, :status, :response_body, :response_object
+    attr_accessor :method, :request_uri, :status, :response_body, :response_object, :response_headers
   
-    def initialize(method, request_uri, status, response_body, msg=nil)
+    def initialize(method, request_uri, status, response_body, response_headers, msg=nil)
       self.method = method
       self.request_uri = request_uri
       self.status = status
       self.response_body = response_body
+      self.response_headers = response_headers
       super(msg||"#{self.method} #{self.request_uri} => #{self.status}: #{self.response_body}")
     end
   end  
@@ -214,7 +215,7 @@ module Grackle
           )
         rescue => e
           puts e
-          raise TwitterError.new(request.method,request.url,nil,nil,"Unexpected failure making request: #{e}")
+          raise TwitterError.new(request.method,request.url,nil,nil,nil,"Unexpected failure making request: #{e}")
         end        
       end
       
@@ -229,7 +230,7 @@ module Grackle
         rescue TwitterError => e
           raise e
         rescue => e
-          raise TwitterError.new(res.method,res.request_uri,res.status,res.body,"Unable to decode response: #{e}")
+          raise TwitterError.new(res.method,res.request_uri,res.status,res.body,res.headers,"Unable to decode response: #{e}")
         end
       end
       
@@ -242,7 +243,7 @@ module Grackle
       end
       
       def handle_error_response(res,handler)
-        err = TwitterError.new(res.method,res.request_uri,res.status,res.body)
+        err = TwitterError.new(res.method,res.request_uri,res.status,res.body,res.headers)
         err.response_object = handler.decode_response(err.response_body)
         raise err        
       end

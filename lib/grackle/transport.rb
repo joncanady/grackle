@@ -1,13 +1,14 @@
 module Grackle
   
   class Response #:nodoc:
-    attr_accessor :method, :request_uri, :status, :body
+    attr_accessor :method, :request_uri, :status, :body, :headers
     
-    def initialize(method,request_uri,status,body)
+    def initialize(method,request_uri,status,body,headers)
       self.method = method
       self.request_uri = request_uri
       self.status = status
       self.body = body
+      self.headers = headers
     end
   end
   
@@ -65,7 +66,7 @@ module Grackle
         dump_request(req) if debug
         res = http.request(req)
         dump_response(res) if debug
-        Response.new(method,url.to_s,res.code.to_i,res.body)
+        Response.new(method,url.to_s,res.code.to_i,res.body,res.to_hash)
       end
     end
 

@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{grackle}
-  s.version = "0.1.3"
+  s.version = "0.1.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Hayes Davis", "Jon Canady"]
-  s.date = %q{2009-07-22}
+  s.date = %q{2009-08-25}
   s.description = %q{Grackle is a lightweight library for the Twitter REST and Search API.}
   s.email = %q{jon@joncanady.com}
   s.files = ["History.txt", "README.rdoc", "grackle.gemspec", "lib/grackle.rb", "lib/grackle/client.rb", "lib/grackle/handlers.rb", "lib/grackle/transport.rb", "lib/grackle/utils.rb", "test/test_grackle.rb", "test/test_helper.rb", "test/test_client.rb", "test/test_handlers.rb"]
