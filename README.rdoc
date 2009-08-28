@@ -1,10 +1,24 @@
 =grackle
-by Hayes Davis
-- http://twitter.com/hayesdavis
-- hayes [at] appozite.com
-- http://cheaptweet.com
-- http://www.appozite.com
-- http://hayesdavis.net
+Jon Canady's Fork, original by Hayes Davis
+
+== CHANGES IN THIS FORK
+
+- Grackle::TwitterError now includes response_headers, allowing access to the HTTP headers of the Twitter response.
+Required for honoring the Retry-After header sent when the Search API ratelimits you. Accessible as in:
+ 
+  begin
+    client[:search].search.json :q => 'shazam'
+  rescue Grackle::TwitterError => e
+    if e.status == 503 
+      # You've been rate-limited, you probably want to track this somewhere
+      ratelimit_lifted_on = Time.now + e.response_headers['retry-after'].first.to_i
+    end
+  end
+
+Headers may contain multiple values, so to get the single Retry-After header, grab the first result.
+
+- Support for passing in a querystring as the single parameter when making API calls, as in passing the next_page 
+parameter from the Search API directly into the API call.
 
 == DESCRIPTION
 Grackle is a lightweight Ruby wrapper around the Twitter REST and Search APIs. It's based on my experience using the 
